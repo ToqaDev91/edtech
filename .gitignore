@@ -275,4 +275,6 @@ edtech/media/
 .ipython/
 .env
 .envs/*
+dbdata
 dbdata/*
+.first_run_completed
