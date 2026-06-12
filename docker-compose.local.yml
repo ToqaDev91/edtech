@@ -1,0 +1,91 @@
+volumes:
+  edtech_local_postgres_data: {}
+  edtech_local_postgres_data_backups: {}
+  edtech_local_redis_data: {}
+
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./devops/compose/local/django/Dockerfile
+    image: edtech_local_django
+    container_name: edtech_local_django
+    depends_on:
+      - postgres
+      - redis
+      - mailpit
+    volumes:
+      - .:/app
+    env_file:
+      - ./devops/env/local
+    ports:
+      - '8000:8000'
+      - '5679:5678'  # debugpy
+      - '3030:3030'
+    command: ["./devops/entry", "runserver"]
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./devops/compose/production/postgres/Dockerfile
+    image: edtech_production_postgres
+    container_name: edtech_local_postgres
+    env_file:
+      - ./devops/env/local
+    ports:
+     - '5433:5432'
+    volumes:
+      - ./dbdata:/var/lib/postgresql
+
+  mailpit:
+    image: docker.io/axllent/mailpit:latest
+    container_name: edtech_local_mailpit
+    ports:
+      - "8025:8025"
+
+  redis:
+    image: docker.io/redis:6
+    container_name: edtech_local_redis
+    command: |
+      sh -c '
+      echo "requirepass debug" > /tmp/redis.conf &&
+      echo "user redis on >debug ~* &* +@all" >> /tmp/redis.conf &&
+      redis-server /tmp/redis.conf
+      '
+    volumes:
+      - edtech_local_redis_data:/data
+    ports:
+      - '6379:6379'
+
+  celeryworker:
+    <<: *django
+    image: edtech_local_celeryworker
+    container_name: edtech_local_celeryworker
+    depends_on:
+      - redis
+      - postgres
+      - mailpit
+    ports: []
+    command: ["./devops/entry", "celery"]
+
+  celerybeat:
+    <<: *django
+    image: edtech_local_celerybeat
+    container_name: edtech_local_celerybeat
+    depends_on:
+      - redis
+      - postgres
+      - mailpit
+    ports: []
+    command: ["./devops/entry", "celerybeat"]
+
+  flower:
+    <<: *django
+    image: edtech_local_flower
+    container_name: edtech_local_flower
+    depends_on:
+      - redis
+      - celeryworker
+    ports:
+      - '5555:5555'
+    command: ["./devops/entry", "flower"]

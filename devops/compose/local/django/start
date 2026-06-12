@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+python manage.py migrate
+python manage.py collectstatic --noinput
+python manage.py compilemessages --locale=ar
+python manage.py cities --import country,region,subregion,city,district,alt_name
+#python -m debugpy --listen 0.0.0.0:5678 &
+
+# then start Django normally with autoreload
+python -m debugpy --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000
