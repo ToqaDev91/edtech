@@ -275,3 +275,4 @@ edtech/media/
 .ipython/
 .env
 .envs/*
+dbdata/
