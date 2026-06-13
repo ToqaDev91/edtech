@@ -10,7 +10,7 @@ Backend Django application for students enrollment
 ## Developer's setup
 
 1. install docker and docker compose on your local PC (docker machine is optional)
-2. update environment variables if needed for local deployment --> `devops/env/local`
+2. copy .env-example to `devops/env/local` and fill with needed variables 
 3. Run `make image` to build needed images 
 4. Run `make up` to make those images up containers 
 5. Use superuser configuration from `devops/env/local` to login for admin screen 
