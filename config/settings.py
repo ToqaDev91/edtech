@@ -153,7 +153,8 @@ if ENVIROMENT == 'production':
     THIRD_PARTY_APPS += ['anymail']
 
 LOCAL_APPS = [
-    "edtech.users"
+    "edtech.users",
+    "edtech.enrollment",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DEBUG_APPS + DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
