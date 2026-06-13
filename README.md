@@ -22,11 +22,11 @@ Backend Django application for students enrollment
 
 ## Debugging
 
-Follow these steps to set up remote debugging for `taqtak-api` running inside a Docker container.
+Follow these steps to set up remote debugging for `edtech` running inside a Docker container.
 
 > You will need Visual Studio Code.Install the latest version of Visual Studio Code on your local machine.
 
-1. Open `taqtak-api` project folder in Visual Studio Code.
+1. Open `edtech` project folder in Visual Studio Code.
 
 2. In VSCode, install the Python extension if you haven't already. This extension provides language support for Python and includes debugging features.
 
@@ -41,7 +41,7 @@ Follow these steps to set up remote debugging for `taqtak-api` running inside a 
 
 4. Build the Docker image and start the container:
 
-   - Open a terminal window and navigate to the root folder of the `taqtak-api` project.
+   - Open a terminal window and navigate to the root folder of the `edtech` project.
 
    - Run the following command to build the Docker image: `make up`. This will build the necessary Docker image and start the container.
 
