@@ -1,11 +1,10 @@
-import json
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN
-from rest_framework.exceptions import ValidationError
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.permissions import AllowAny
 from drf_spectacular.utils import extend_schema, OpenApiTypes
 from .serializers import JSONFileUploadSerializer
+from .service import bulk_process
 
 @api_view(http_method_names=["GET"])
 @permission_classes([AllowAny])
@@ -27,14 +26,17 @@ def test_api(request):
             'required': ['file']
         }
     },
-    responses={200: OpenApiTypes.OBJECT}
+    responses={
+        200: OpenApiTypes.OBJECT,
+        400: OpenApiTypes.OBJECT
+    }
 )
 @api_view(http_method_names=["POST"])
 @permission_classes([AllowAny])
-#@parser_classes([MultiPartParser])
 def start_enrollment(request):
     data = JSONFileUploadSerializer(data=request.data)
     if data.is_valid():
-        # Process the valid data
-        pass
-    return Response({"message": "File uploaded successfully!"})
+        bulk_process(raw_data=data.validated_data.get('file'))
+    else:
+        return Response(data.errors, status=HTTP_400_BAD_REQUEST)
+    return Response({"message": "File uploaded successfully!"}, status=HTTP_200_OK)

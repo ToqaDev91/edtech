@@ -12,9 +12,9 @@ class JSONFileUploadSerializer(serializers.Serializer):
         try:
             import json
             content = value.read()
-            json.loads(content)
+            data = json.loads(content)
             value.seek(0)
         except json.JSONDecodeError:
             raise serializers.ValidationError("File content is not valid JSON.")
         
-        return value
+        return data
