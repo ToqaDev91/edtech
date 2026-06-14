@@ -2,6 +2,11 @@
 
 Backend Django application for students enrollment
 
+## ADR Document 
+
+- [ADR Document](ADR.md)
+- [Handling 100M records](ADR.md#Handling-100M-records)
+
 ## Requirements
 
 - Docker: https://docs.docker.com/engine/installation/
@@ -65,3 +70,5 @@ if you add/edit/remove keys from message.po file and want to complie messages ag
  `make compile-trans`
 
 ## Data Builder
+
+You can use [Students](students.json) File to upload data via ```enrollment/start``` API
