@@ -12,8 +12,8 @@ class Process(models.Model):
 class Enrollment(models.Model):
     """enrollment main table"""
     student_id = models.CharField(max_length=128, null=False, blank=False)
-    region = models.CharField(max_length=128, null=False, blank=False)
-    grade = models.CharField(max_length=128, null=False, blank=False)
+    region = models.CharField(max_length=128, null=False, blank=False, db_index=True)
+    grade = models.CharField(max_length=128, null=False, blank=False, db_index=True)
     enrollment_date = models.DateTimeField(auto_now_add=True)
    
     class Meta:

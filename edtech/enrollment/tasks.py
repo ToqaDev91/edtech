@@ -25,7 +25,6 @@ def handle_enrollment(self: Task, items):
             for process in processes:
                 process.status = PROCESSED
                 process.processed_at = processed_at
-            
             Process.objects.bulk_update(processes, ['status', 'processed_at'])
     except Exception as e:
         logger.error(f"Batch processing error: {str(e)}")

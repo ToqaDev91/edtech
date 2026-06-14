@@ -18,3 +18,6 @@ class JSONFileUploadSerializer(serializers.Serializer):
             raise serializers.ValidationError("File content is not valid JSON.")
         
         return data
+    
+class EnrollmentCountSerializer(serializers.Serializer):
+    query = serializers.ChoiceField(['region', 'grade'])
