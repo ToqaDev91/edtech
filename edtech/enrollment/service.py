@@ -13,5 +13,3 @@ def bulk_process(raw_data, chunk_size=500):
 
 def get_enrollment_count(query):
     return Enrollment.objects.values(query).annotate(count=models.Count("id"))
-    
-    

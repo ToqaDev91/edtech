@@ -7,3 +7,11 @@ TYPES_STATUS = [
     (PROCESSED, 'Processed'),
     (FAILED, 'Failed'),
 ]
+
+REGION = 'region'
+GRADE = 'grade'
+
+COUNTER_TYPES = [
+    (REGION, 'Region'),
+    (GRADE, 'Grade'),
+]

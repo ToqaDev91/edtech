@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Enrollment, Process
+from .models import Enrollment, Process, EnrollmentCounter
 
 @admin.register(Enrollment)
 class EnrollmentAdmin(admin.ModelAdmin):
@@ -14,5 +14,10 @@ class ProcessAdmin(admin.ModelAdmin):
     search_fields = ('status',)
     list_filter = ('status',)
     ordering = ('-created_at',)
-    
-
+        
+@admin.register(EnrollmentCounter)
+class EnrollmentCounterAdmin(admin.ModelAdmin):
+    list_display = ('key_type', 'key_value', 'count')
+    search_fields = ('key_type', 'key_value')
+    list_filter = ('key_type',)
+    ordering = ('-count',)

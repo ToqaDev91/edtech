@@ -1,5 +1,7 @@
 from django.db import models
-from .constants import TYPES_STATUS, PENDING
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from .constants import TYPES_STATUS, PENDING, COUNTER_TYPES
 
 
 class Process(models.Model):
@@ -18,7 +20,13 @@ class Enrollment(models.Model):
    
     class Meta:
         unique_together = ('student_id', 'region', 'grade')
+
+class EnrollmentCounter(models.Model):
+    key_type= models.CharField(max_length=128, null=False, blank=False, choices=COUNTER_TYPES, db_index=True)
+    key_value = models.CharField(max_length=128, null=False, blank=False)
+    count = models.PositiveIntegerField(default=0)
+
+    class Meta:
         indexes = [
-            models.Index(fields=['region', 'grade']),
+            models.Index(fields=['key_type', 'key_value']),
         ]
-   
