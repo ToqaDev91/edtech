@@ -44,7 +44,7 @@ services:
       - "8025:8025"
 
   redis:
-    image: docker.io/redis:6
+    image: docker.io/redis:8
     container_name: edtech_local_redis
     command: |
       sh -c '
